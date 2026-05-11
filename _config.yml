@@ -6,6 +6,8 @@ avatarTitle: leopardpan
 avatarDesc: iOS / 机器学习
 url: "https://baixinpan.github.io"
 baseurl: ""
+cover_image: /images/background-cover.jpg
+avatar_image: /images/avatar.jpg
 
 # Blog behavior
 enableToc: true

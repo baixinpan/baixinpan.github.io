@@ -5,6 +5,8 @@
 
   {% assign page_title = page.title | default: site.title %}
   {% assign page_description = page.excerpt | strip_html | strip_newlines | truncate: 160 | default: site.description %}
+  {% assign canonical_url = page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url %}
+  {% assign share_image = site.cover_image | default: '/images/background-cover.jpg' | prepend: site.baseurl | prepend: site.url %}
 
   <title>{% if page.title %}{{ page.title | escape }} - {{ site.title | escape }}{% else %}{{ site.title | escape }}｜{{ site.subtitle | escape }}{% endif %}</title>
   <meta name="description" content="{{ page_description | escape }}">
@@ -14,15 +16,18 @@
   <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
   <meta property="og:title" content="{{ page_title | escape }}">
   <meta property="og:description" content="{{ page_description | escape }}">
-  <meta property="og:url" content="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <meta property="og:url" content="{{ canonical_url }}">
   <meta property="og:site_name" content="{{ site.title | escape }}">
+  <meta property="og:image" content="{{ share_image }}">
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="{{ page_title | escape }}">
   <meta name="twitter:description" content="{{ page_description | escape }}">
+  <meta name="twitter:image" content="{{ share_image }}">
 
   <link rel="icon" type="image/png" href="{{ '/images/favicon.png' | prepend: site.baseurl }}">
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  <link rel="preload" as="image" href="{{ site.cover_image | default: '/images/background-cover.jpg' | prepend: site.baseurl }}">
+  <link rel="canonical" href="{{ canonical_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ '/feed.xml' | prepend: site.baseurl | prepend: site.url }}">
   <link rel="stylesheet" href="{{ '/css/main.css' | prepend: site.baseurl }}">
 </head>

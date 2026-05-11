@@ -1,15 +1,17 @@
+{% assign current_url = page.url | replace:'index.html','' %}
 <!DOCTYPE html>
 <html lang="zh-CN">
   {% include head.html %}
 
-  <body>
+  <body class="{% if current_url == '/' %}home-page{% else %}inner-page{% endif %}">
     <a class="skip-link" href="#main">跳到正文</a>
 
     <div class="mobile btn-mobile-menu" aria-label="移动端导航">
       <nav class="nav-menu-item">
-        <a href="/#blog" title="{{ site.blog_button.description }}" class="blog-button">{{ site.blog_button.title }}</a>
+        <a href="{{ '/#blog' | prepend: site.baseurl }}" title="{{ site.blog_button.description }}" class="blog-button {% if current_url == '/' %}is-active{% endif %}" {% if current_url == '/' %}aria-current="page"{% endif %}>{{ site.blog_button.title }}</a>
         {% for item in site.nav %}
-          <a href="{{ item.url }}" title="{{ item.description }}" class="btn-mobile-menu__icon">{{ item.title }}</a>
+          {% assign item_url = item.url | append: '/' %}
+          <a href="{{ item.url | prepend: site.baseurl }}" title="{{ item.description }}" class="btn-mobile-menu__icon {% if current_url == item.url or current_url == item_url %}is-active{% endif %}" {% if current_url == item.url or current_url == item_url %}aria-current="page"{% endif %}>{{ item.title }}</a>
         {% endfor %}
       </nav>
     </div>

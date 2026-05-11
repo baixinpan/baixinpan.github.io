@@ -3,6 +3,8 @@ layout: page
 title: 文章
 ---
 
+<p class="page-summary">当前共整理 {{ site.posts | size }} 篇文章，按发布时间倒序归档。</p>
+
 <div class="archive-list">
   {% for post in site.posts %}
     {% assign current_year = post.date | date: "%Y" %}

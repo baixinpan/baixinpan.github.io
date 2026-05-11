@@ -3,6 +3,8 @@ layout: page
 title: 标签
 ---
 
+<p class="page-summary">当前共 {{ site.tags | size }} 个标签，可按主题快速回看相关内容。</p>
+
 <div class="tag-cloud">
   {% for tag in site.tags %}
     <a href="#{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>

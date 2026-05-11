@@ -21,7 +21,7 @@ H3 :### Header 3
 H4 :#### Header 4           
 H5 :##### Header 5            
 H6 :###### Header 6      
-链接 :[Title](URL)        
+链接 :Title        
 加粗 :**Bold**        
 斜体字 :*Italics*         
 *删除线 :~~text~~          

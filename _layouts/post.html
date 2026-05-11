@@ -3,6 +3,8 @@ layout: default
 ---
 
 <article class="shell post-layout" itemscope itemtype="https://schema.org/BlogPosting">
+  <meta itemprop="author" content="{{ site.title | escape }}">
+  <meta itemprop="mainEntityOfPage" content="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
   <header class="post-hero">
     <a class="back-link" href="{{ '/archive' | prepend: site.baseurl }}">返回文章列表</a>
     <h1 itemprop="headline">{{ page.title }}</h1>
@@ -15,16 +17,18 @@ layout: default
     </div>
   </header>
 
-  {% if site.enableToc %}
-    <aside class="toc-card" aria-label="文章目录">
-      <strong>目录</strong>
-      {% include toc.html html=content h_min=2 h_max=3 sanitize=true %}
-    </aside>
-  {% endif %}
+  <div class="post-body-grid">
+    {% if site.enableToc %}
+      <aside class="toc-card" aria-label="文章目录">
+        <strong>目录</strong>
+        {% include toc.html html=content h_min=2 h_max=3 sanitize=true %}
+      </aside>
+    {% endif %}
 
-  <section class="prose post-content" itemprop="articleBody">
-    {{ content }}
-  </section>
+    <section class="prose post-content" itemprop="articleBody">
+      {{ content }}
+    </section>
+  </div>
 </article>
 
 {% include new-old.html %}

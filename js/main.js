@@ -1,11 +1,14 @@
 document.addEventListener('DOMContentLoaded', function () {
   var panel = document.querySelector('.panel-cover');
-  var postList = document.querySelector('.main-post-list');
   var blogButtons = document.querySelectorAll('.blog-button');
+  var isHome = document.body.classList.contains('home-page');
+
+  if (isHome && panel && window.location.hash !== '#blog') {
+    panel.classList.remove('panel-cover--collapsed');
+  }
 
   function openBlog() {
-    if (!panel || !postList) return;
-    postList.classList.remove('hidden');
+    if (!panel) return;
     panel.classList.add('panel-cover--collapsed');
   }
 

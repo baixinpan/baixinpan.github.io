@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<section class="main-post-list hidden" id="blog" aria-label="文章列表">
+<section class="main-post-list" id="blog" aria-label="文章列表">
   <div class="section-heading">
     <p class="eyebrow">Latest Posts</p>
     <h2>最新文章</h2>
@@ -15,15 +15,15 @@ layout: default
           <a class="post-card__main" href="{{ post.url | prepend: site.baseurl }}" title="访问 {{ post.title }}">
             <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
             <h2>{{ post.title }}</h2>
-            <p>{{ post.content | strip_html | strip_newlines | truncate: 150 }}</p>
+            <p>{{ post.description | default: post.excerpt | default: post.content | strip_html | strip_newlines | truncate: 128 }}</p>
           </a>
 
           <footer class="post-card__footer">
             {% assign card_tags = post.tags | default: post.tag %}
             {% if card_tags %}
-              <a class="tag-pill" href="{{ '/tags' | prepend: site.baseurl }}">{{ card_tags }}</a>
+              <a class="tag-pill" href="{{ '/tags' | prepend: site.baseurl }}" aria-label="查看标签：{{ card_tags }}">{{ card_tags }}</a>
             {% endif %}
-            <a class="read-more" href="{{ post.url | prepend: site.baseurl }}">阅读全文</a>
+            <a class="read-more" href="{{ post.url | prepend: site.baseurl }}" aria-label="阅读全文：{{ post.title }}">阅读全文</a>
           </footer>
         </article>
       </li>

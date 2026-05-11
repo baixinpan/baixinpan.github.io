@@ -8,6 +8,11 @@
 https://baixinpan.github.io/
 ```
 
+## 项目沿革
+
+- 原项目：[leopardpan.github.io](https://leopardpan.github.io/) 对应账号已丢失。
+- 本项目在该仓库历史基础上继续迭代和优化维护。
+
 ## 当前状态
 
 - 保留原博客的封面头像、头像翻转、点击进入文章列表等交互。
