@@ -18,7 +18,7 @@ https://baixinpan.github.io/
 - 保留原博客的封面头像、头像翻转、点击进入文章列表等交互。
 - 保留文章卡片式列表和响应式布局。
 - 优化了首页、文章页、归档页、标签页、页脚和基础 SEO 信息。
-- 清理了旧模板说明、广告统计脚本和不必要的第三方展示内容。
+- 恢复总站阅读统计、文章阅读统计、Twikoo/Livere/Disqus 评论入口和页脚社交链接。
 
 ## 目录说明
 
@@ -26,6 +26,7 @@ https://baixinpan.github.io/
 - `_layouts/`：页面基础模板。
 - `_includes/`：可复用页面片段，例如头部、侧栏、页脚、分页。
 - `css/`：站点样式。
+- `docs/`：部署、运维和迁移说明。
 - `js/`：站点交互脚本。
 - `images/`：站点图片资源。
 - `about.md`：关于页。
@@ -63,6 +64,8 @@ http://127.0.0.1:4000/
 
 - 新文章放在 `_posts/` 目录，文件名使用 `YYYY-MM-DD-title.md`。
 - 站点标题、描述、导航和社交信息在 `_config.yml` 中维护。
+- 阅读统计、评论、百度统计、Google Analytics 也在 `_config.yml` 中维护；评论可通过 `comment.provider` 在 Twikoo、Livere、Disqus 间切换。
+- 评论系统的部署、备份和迁移步骤见 `docs/comments.md`。
 - 头像翻转效果来自当前项目的历史样式，后续不要随意重写该段动画。
 - `vendor/`、`.bundle/`、`_site/` 都是本地生成目录，不需要提交。
 

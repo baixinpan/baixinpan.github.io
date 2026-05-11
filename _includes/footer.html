@@ -1,13 +1,59 @@
 <footer class="site-footer">
   <div class="shell site-footer__inner">
-    <p>© {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+    <div class="site-footer__meta">
+      <p>© {{ site.time | date: '%Y' }} {{ site.title }}. All rights reserved.</p>
+      {% if site.enableBusuanzi %}
+        <p class="site-stats" id="busuanzi_container_site_pv">
+          本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+        </p>
+      {% endif %}
+    </div>
     <div class="footer-links">
-      <a href="{{ '/feed.xml' | prepend: site.baseurl }}">RSS</a>
+      <a class="footer-social-link" href="{{ '/feed.xml' | prepend: site.baseurl }}" title="RSS">
+        <img src="{{ '/images/rss.png' | prepend: site.baseurl }}" alt="" width="20" height="20">
+        <span>RSS</span>
+      </a>
       {% if site.social.github %}
-        <a href="https://github.com/{{ site.social.github }}" target="_blank" rel="noopener">GitHub</a>
+        <a class="footer-social-link" href="https://github.com/{{ site.social.github }}" target="_blank" rel="noopener" title="GitHub">
+          <img src="{{ '/images/github.png' | prepend: site.baseurl }}" alt="" width="20" height="20">
+          <span>GitHub</span>
+        </a>
+      {% endif %}
+      {% if site.social.weibo %}
+        <a class="footer-social-link" href="https://weibo.com/{{ site.social.weibo }}" target="_blank" rel="noopener" title="微博">
+          <img src="{{ '/images/weibo.png' | prepend: site.baseurl }}" alt="" width="20" height="20">
+          <span>微博</span>
+        </a>
+      {% endif %}
+      {% if site.social.jianshu %}
+        <a class="footer-social-link" href="https://www.jianshu.com/u/{{ site.social.jianshu }}" target="_blank" rel="noopener" title="简书">
+          <img src="{{ '/images/jianshu.png' | prepend: site.baseurl }}" alt="" width="20" height="20">
+          <span>简书</span>
+        </a>
+      {% endif %}
+      {% if site.social.zhihu %}
+        <a class="footer-social-link" href="https://www.zhihu.com/people/{{ site.social.zhihu }}" target="_blank" rel="noopener" title="知乎">
+          <img src="{{ '/images/zhihu.png' | prepend: site.baseurl }}" alt="" width="20" height="20">
+          <span>知乎</span>
+        </a>
+      {% endif %}
+      {% if site.social.juejin %}
+        <a class="footer-social-link" href="https://juejin.cn/user/{{ site.social.juejin }}" target="_blank" rel="noopener" title="掘金">
+          <img src="{{ '/images/juejin.png' | prepend: site.baseurl }}" alt="" width="20" height="20">
+          <span>掘金</span>
+        </a>
+      {% endif %}
+      {% if site.social.twitter %}
+        <a class="footer-social-link" href="https://twitter.com/{{ site.social.twitter }}" target="_blank" rel="noopener" title="Twitter">
+          <img src="{{ '/images/twitter.png' | prepend: site.baseurl }}" alt="" width="20" height="20">
+          <span>Twitter</span>
+        </a>
       {% endif %}
       {% if site.social.mail %}
-        <a href="mailto:{{ site.social.mail }}">Email</a>
+        <a class="footer-social-link" href="mailto:{{ site.social.mail }}" title="Email">
+          <img src="{{ '/images/email.png' | prepend: site.baseurl }}" alt="" width="20" height="20">
+          <span>Email</span>
+        </a>
       {% endif %}
     </div>
   </div>

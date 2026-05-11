@@ -11,20 +11,31 @@ avatar_image: /images/avatar.jpg
 
 # Blog behavior
 enableToc: true
+enableBusuanzi: true
 permalink: /:year/:month/:title/
 highlighter: rouge
 
-# Comments are disabled by default to keep pages fast and clean.
+# Comments are enabled when a provider id is configured.
 comment:
+  provider: twikoo
+  twikoo:
+    envId: https://comment.mcgfdata.com
   disqus:
-  livere:
+  livere: MTAyMC81MDk5NC8yNzQ3Ng
+
+# Analytics are enabled when ids are configured.
+baidu:
+  id: 8ba1c6be0953b6f9c2ba38e57f615421
+ga:
+  id: UA-84134159-3
+  host: auto
 
 # Social links
 social:
   github: baixinpan
-  mail:
-  weibo:
-  jianshu:
+  mail: leopardpan@icloud.com
+  weibo: 5366874726
+  jianshu: 2ada30d8d0f7
   zhihu:
   juejin:
   twitter:

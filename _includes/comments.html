@@ -1,9 +1,51 @@
-{% if site.comment.livere or site.comment.disqus %}
+{% assign comment_provider = site.comment.provider %}
+{% assign twikoo_env_id = site.comment.twikoo.envId %}
+{% if comment_provider == 'twikoo' and twikoo_env_id or comment_provider == 'livere' and site.comment.livere or comment_provider == 'disqus' and site.comment.disqus %}
   <section class="shell post-comments">
-    {% if site.comment.livere %}
-      <div id="lv-container" data-id="city" data-uid="{{ site.comment.livere }}"></div>
-    {% elsif site.comment.disqus %}
+    {% if comment_provider == 'twikoo' and twikoo_env_id %}
+      <div id="twikoo"></div>
+      <script src="https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.all.min.js"></script>
+      <script>
+        twikoo.init({
+          envId: '{{ twikoo_env_id }}',
+          el: '#twikoo',
+          path: '{{ page.url }}',
+          lang: 'zh-CN'
+        });
+      </script>
+      <noscript>为正常使用 Twikoo 评论功能请启用 JavaScript。</noscript>
+    {% elsif comment_provider == 'livere' and site.comment.livere %}
+      <div id="lv-container" data-id="city" data-uid="{{ site.comment.livere }}">
+        <script>
+          (function(d, s) {
+            var j;
+            var e = d.getElementsByTagName(s)[0];
+            if (typeof LivereTower === 'function') return;
+            j = d.createElement(s);
+            j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+            j.async = true;
+            e.parentNode.insertBefore(j, e);
+          })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请启用 JavaScript。</noscript>
+      </div>
+    {% elsif comment_provider == 'disqus' and site.comment.disqus %}
       <div id="disqus_thread"></div>
+      <script>
+        var disqus_config = function () {
+          this.page.url = "{{ page.url | prepend: site.baseurl | prepend: site.url }}";
+          this.page.identifier = "{{ page.url }}";
+        };
+        var disqus_shortname = "{{ site.comment.disqus }}";
+        (function() {
+          var d = document;
+          var s = d.createElement('script');
+          s.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+      <noscript>要查看 Disqus 评论，请启用 JavaScript。</noscript>
     {% endif %}
   </section>
 {% endif %}
