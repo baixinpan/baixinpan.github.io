@@ -2,31 +2,29 @@
 layout: default
 ---
 
-<head>
-  <link rel="stylesheet" href="{{ "/css/post.css" | prepend: site.baseurl }}">
-</head>
-
-<article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
-  <header class="post-header">
-    <h1 class="post-title">{{ page.title }}</h1>
+<article class="shell post-layout" itemscope itemtype="https://schema.org/BlogPosting">
+  <header class="post-hero">
+    <a class="back-link" href="{{ '/archive' | prepend: site.baseurl }}">返回文章列表</a>
+    <h1 itemprop="headline">{{ page.title }}</h1>
     <div class="post-meta">
-      <img src="/images/calendar.png" width="20px"/> 
-      <time datetime="{{page.date | date: date_to_xmlschema}}" itemprop="datePublished" class="post-meta__date date">{{page.date | date: "%F"}}</time>  
-
-      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
-    </p>
+      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%Y-%m-%d" }}</time>
+      {% assign post_tags = page.tags | default: page.tag %}
+      {% if post_tags %}
+        <span>{{ post_tags }}</span>
+      {% endif %}
     </div>
   </header>
 
   {% if site.enableToc %}
-    <h2 class="post-title">目录</h2>
-    {% include toc.html html=content %}
+    <aside class="toc-card" aria-label="文章目录">
+      <strong>目录</strong>
+      {% include toc.html html=content h_min=2 h_max=3 sanitize=true %}
+    </aside>
   {% endif %}
 
-  <section class="post">
+  <section class="prose post-content" itemprop="articleBody">
     {{ content }}
   </section>
-
 </article>
 
 {% include new-old.html %}

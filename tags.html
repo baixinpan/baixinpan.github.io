@@ -1,25 +1,24 @@
 ---
 layout: page
-title: 
-header: 根据快速导航到相应的文章
-group: navigation
+title: 标签
 ---
-{% include JB/setup %}
 
-<ul class="tag_box inline">
-  {% assign tags_list = site.tags %}  
-  {% include JB/tags_list %}
-</ul>
+<div class="tag-cloud">
+  {% for tag in site.tags %}
+    <a href="#{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
+  {% endfor %}
+</div>
 
-<div class = "card">
-{% for tag in site.tags %} 
-
-  <h3 id="{{ tag[0] }}-ref">{{ tag[0] }}</h3>
-  <ul>
-    {% assign pages_list = tag[1] %}  
-    {% include JB/pages_list %}
-  </ul>
-
-
-{% endfor %}
+<div class="tag-sections">
+  {% for tag in site.tags %}
+    <section id="{{ tag[0] | slugify }}" class="tag-section">
+      <h2>{{ tag[0] }}</h2>
+      {% for post in tag[1] %}
+        <a class="archive-item" href="{{ post.url | prepend: site.baseurl }}">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+          <span>{{ post.title }}</span>
+        </a>
+      {% endfor %}
+    </section>
+  {% endfor %}
 </div>
