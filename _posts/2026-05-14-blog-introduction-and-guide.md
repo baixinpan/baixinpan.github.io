@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 个人博客介绍与使用文档
-date: 2026-05-14
+date: 2026-05-14 00:00:00 +0800
 description: "介绍 baixinpan.github.io 在历史博客模板基础上改版升级后的定位、主要功能、浏览方式、写作发布和维护方法。"
 tags: jekyll
 featured: true
@@ -185,6 +185,252 @@ BUNDLE_PATH=vendor/bundle bundle exec jekyll build
 
 如果本地 Ruby 依赖较旧，可能会遇到 `ffi`、`public_suffix` 等 gem 安装问题。可以优先参考 `README.md` 中的说明，或使用 GitHub Pages 的线上构建作为最终发布环境。
 
+## 从零部署到 GitHub Pages
+
+如果你想基于这个博客模板搭建自己的个人博客，可以按下面这条完整链路操作。
+
+### 1. 准备 GitHub 账号
+
+先准备一个 GitHub 账号。假设你的 GitHub 用户名是：
+
+```text
+yourname
+```
+
+你的 GitHub Pages 个人站仓库名应当是：
+
+```text
+yourname.github.io
+```
+
+GitHub Pages 会把这个仓库发布到：
+
+```text
+https://yourname.github.io/
+```
+
+### 2. 创建个人站仓库
+
+在 GitHub 新建仓库：
+
+```text
+yourname.github.io
+```
+
+建议设置为 Public。个人 GitHub Pages 通常使用公开仓库最简单。
+
+### 3. 获取博客模板代码
+
+如果你是基于当前项目继续改，可以把代码下载到本地：
+
+```bash
+git clone https://github.com/baixinpan/baixinpan.github.io.git
+```
+
+进入目录：
+
+```bash
+cd baixinpan.github.io
+```
+
+然后把远程仓库地址改成你自己的仓库：
+
+```bash
+git remote set-url origin https://github.com/yourname/yourname.github.io.git
+```
+
+也可以直接下载 ZIP，解压后再初始化 Git：
+
+```bash
+git init
+git remote add origin https://github.com/yourname/yourname.github.io.git
+```
+
+### 4. 修改站点配置
+
+主要修改 `_config.yml`。
+
+至少需要改这些字段：
+
+```yaml
+title: 你的名字
+subtitle: 个人站
+description: 欢迎来到我的个人站
+url: "https://yourname.github.io"
+baseurl: ""
+```
+
+再根据需要修改：
+
+```yaml
+avatarTitle: yourname
+avatarDesc: 你的方向
+social:
+  github: yourname
+  mail: your-email@example.com
+```
+
+如果你暂时不想开启评论、统计，也可以先关闭：
+
+```yaml
+enableBusuanzi: false
+comment:
+  provider:
+```
+
+### 5. 替换头像和封面
+
+常用图片路径：
+
+```text
+images/avatar.jpg
+images/background-cover.jpg
+images/favicon.png
+```
+
+保持文件名不变最省事。如果换成其它文件名，需要同步修改 `_config.yml` 中的：
+
+```yaml
+cover_image: /images/background-cover.jpg
+avatar_image: /images/avatar.jpg
+```
+
+### 6. 写第一篇文章
+
+在 `_posts/` 下创建文章：
+
+```text
+2026-05-14-my-first-post.md
+```
+
+示例内容：
+
+```markdown
+---
+layout: post
+title: 我的第一篇文章
+date: 2026-05-14 00:00:00 +0800
+description: "记录我的第一篇博客文章。"
+tags: blog
+featured: true
+---
+
+这是我的第一篇文章。
+```
+
+注意：
+
+- 文件名必须是 `YYYY-MM-DD-title.md`。
+- `date` 建议写完整时区，例如 `2026-05-14 00:00:00 +0800`。
+- `description` 会用于首页摘要、搜索结果、RSS 和 SEO。
+- `featured: true` 会让文章进入首页精选。
+
+### 7. 本地预览
+
+安装依赖：
+
+```bash
+bundle install --path vendor/bundle
+```
+
+启动预览：
+
+```bash
+BUNDLE_PATH=vendor/bundle bundle exec jekyll serve --host 127.0.0.1 --port 4000
+```
+
+打开：
+
+```text
+http://127.0.0.1:4000/
+```
+
+本地重点检查：
+
+- 首页是否显示你的文章。
+- 搜索页能否搜索到文章。
+- 标签页是否能按 tag 过滤。
+- 文章页目录、代码块和评论区是否正常。
+
+### 8. 提交代码
+
+确认无误后提交：
+
+```bash
+git add .
+git commit -m "init personal blog"
+git push -u origin master
+```
+
+如果你的仓库默认分支是 `main`，则使用：
+
+```bash
+git push -u origin main
+```
+
+### 9. 开启 GitHub Pages
+
+进入 GitHub 仓库页面：
+
+```text
+Settings → Pages
+```
+
+选择发布源：
+
+```text
+Deploy from a branch
+```
+
+分支选择：
+
+```text
+master 或 main
+```
+
+目录选择：
+
+```text
+/(root)
+```
+
+保存后等待 GitHub Pages 构建完成。
+
+### 10. 访问线上站点
+
+构建完成后访问：
+
+```text
+https://yourname.github.io/
+```
+
+如果页面没有立刻出现，可以等几分钟再刷新。GitHub Pages 第一次发布通常需要一点时间。
+
+### 11. 后续更新流程
+
+以后每次更新文章或配置，流程都是：
+
+```bash
+git add .
+git commit -m "update blog"
+git push
+```
+
+GitHub Pages 会自动重新构建并发布。
+
+完整链路可以概括为：
+
+```text
+创建 yourname.github.io 仓库
+→ 放入博客模板代码
+→ 修改 _config.yml
+→ 写文章到 _posts
+→ 本地预览
+→ git push
+→ GitHub Pages 自动发布
+→ 访问 https://yourname.github.io/
+```
+
 ## 写一篇新文章
 
 写文章的方式延续旧版模板：把 Markdown 文件放到 `_posts/`，通过 front matter 声明标题、日期、标签等信息。
@@ -247,6 +493,15 @@ tags: jekyll
 如果只是日常维护，通常只需要修改 `_posts/` 和 `_config.yml`。
 
 如果你想添加新导航页面，可以参考当前的 `projects.md`、`about.md` 和 `support.md`，然后在 `_config.yml` 的 `nav` 中增加入口。
+
+当前站点底部只展示已配置的社交入口。模板仍然支持微博、简书、知乎、掘金、Twitter 等链接；如果某个平台不想展示，保持对应字段为空即可。例如当前微博字段为空，底部就不会显示微博入口：
+
+```yaml
+social:
+  github: baixinpan
+  mail: leopardpan@icloud.com
+  weibo:
+```
 
 ## 评论与统计
 

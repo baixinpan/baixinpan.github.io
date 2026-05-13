@@ -34,7 +34,7 @@ ga:
 social:
   github: baixinpan
   mail: leopardpan@icloud.com
-  weibo: 5366874726
+  weibo:
   jianshu: 2ada30d8d0f7
   zhihu:
   juejin:
@@ -47,7 +47,6 @@ blog_button:
 nav:
   - {title: 文章, description: 所有文章, url: '/archive'}
   - {title: 标签, description: 按标签浏览文章, url: '/tags'}
-  - {title: 搜索, description: 搜索站内文章, url: '/search'}
   - {title: 项目, description: 项目与工具, url: '/projects'}
   - {title: 关于, description: 关于我, url: '/about'}
 
