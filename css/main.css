@@ -1476,6 +1476,10 @@ img {
     display: none;
   }
 
+  .navigation-wrapper {
+    display: none;
+  }
+
   .ih-item.circle.effect,
   .ih-item.circle.effect .info {
     perspective: none;
