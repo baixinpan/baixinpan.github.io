@@ -2,6 +2,7 @@
 layout: post
 title: 文档支持的Markdown语法
 date: 2016-11-20 
+description: "展示当前博客支持的 Markdown 标题、列表、引用、代码高亮、表格和待办语法。"
 tags: markdown    
 ---
 
@@ -77,5 +78,4 @@ if __name__ == '__main__':
 | 计算机     | \$1600 |   5     |
 | 手机        |   \$12   |   12   |
 | 管线        |    \$1    |  234  |
-
 

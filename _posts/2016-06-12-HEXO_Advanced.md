@@ -1,6 +1,7 @@
 ---
 layout: post
 title: HEXO进阶
+description: "整理 Hexo 博客部署、版本管理、多电脑写作和搜索收录等进阶使用问题。"
 tag: hexo
 ---
 
@@ -13,7 +14,7 @@ HEXO接近是最近有一些朋友提出的问题，然后我做了总结，如�
 
 
 ### 使用Jekyll解决前三个问题。
-不得不说 `Jekyll` 确实可以解决我上面三个问题, 因为 `Jekyll` 是直接把Markdown格式的文章直接放在github仓库里的, 相当于直接用git来管理博客了, `Github` 官方也很推荐 `Jekyll` 。 你可以先看下 `Jekyll` 搭建博客的[voyagelab](voyagelab.github.io), [github地址](https://github.com/voyagelab/voyagelab.github.io), 当然了这只是很普通的, Jekyll 也有很多主题可以选择的, 更详细的请看[Jekyll中文文档](http://jekyll.bootcss.com/)、[Jekyll英文文档](https://jekyllrb.com/)、[Jekyll主题列表](http://jekyllthemes.org/)。
+不得不说 `Jekyll` 确实可以解决我上面三个问题, 因为 `Jekyll` 是直接把Markdown格式的文章直接放在github仓库里的, 相当于直接用git来管理博客了, `Github` 官方也很推荐 `Jekyll` 。 你可以先看下 `Jekyll` 搭建博客的[voyagelab](https://voyagelab.github.io), [github地址](https://github.com/voyagelab/voyagelab.github.io), 当然了这只是很普通的, Jekyll 也有很多主题可以选择的, 更详细的请看[Jekyll中文文档](http://jekyll.bootcss.com/)、[Jekyll英文文档](https://jekyllrb.com/)、[Jekyll主题列表](http://jekyllthemes.org/)。
 在 `Jekyll` 上逛了一个星期的我又回到了 `Hexo` , 发现 目前 `Jekyll` 对主题和一些插件的支持相对 `Hexo` 来说, 没那么友好, 可能有一些其它的方法只是我没找到而已,关于 `Jekyll` 搭建博客就介绍到这, 如果有问题的话可以评论, 或者联系我。
 
 ### 使用Hexo解决上面前三个问题

@@ -2,7 +2,9 @@
 layout: post
 title: Jekyll搭建个人博客
 date: 2016-10-14 
+description: "从环境配置、目录结构到 GitHub Pages 发布，完整记录使用 Jekyll 搭建个人博客的流程。"
 tags: jekyll   
+featured: true
 ---
 
 　之前写了一篇[HEXO搭建个人博客](https://baixinpan.github.io/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/)的教程获得了很好评，尤其是在简书上目前已经累积了10W+的阅读量了，也有好心的读者主动给我打赏，在此感谢。
@@ -280,7 +282,6 @@ Configuration file: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpa
 
 > 问题：最近很多朋友使用我的模板报警告：The CNAME `baixinpan.github.io` is already taken 
 > 解决：把CNAME里面的baixin.io修改成你自己的域名，如果你暂时没有域名，CNAME里面就什么都不用谢。（之前没人反馈过这个问题，应该是github page最近才最的限制。）
-
 
 
 

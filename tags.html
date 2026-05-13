@@ -3,17 +3,22 @@ layout: page
 title: 标签
 ---
 
-<p class="page-summary">当前共 {{ site.tags | size }} 个标签，可按主题快速回看相关内容。</p>
+<p class="page-summary" data-tag-page-summary data-default-summary="当前共 {{ site.tags | size }} 个标签，可按主题快速回看相关内容。">当前共 {{ site.tags | size }} 个标签，可按主题快速回看相关内容。</p>
+
+<div class="tag-filter-status" data-tag-filter-status hidden>
+  <span></span>
+  <a class="button button--ghost" href="{{ '/tags' | prepend: site.baseurl }}">查看全部标签</a>
+</div>
 
 <div class="tag-cloud">
   {% for tag in site.tags %}
-    <a href="#{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
+    <a href="#{{ tag[0] | slugify }}" data-tag-filter="{{ tag[0] | slugify }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
   {% endfor %}
 </div>
 
 <div class="tag-sections">
   {% for tag in site.tags %}
-    <section id="{{ tag[0] | slugify }}" class="tag-section">
+    <section id="{{ tag[0] | slugify }}" class="tag-section" data-tag-section="{{ tag[0] | slugify }}" data-tag-name="{{ tag[0] }}" data-tag-count="{{ tag[1].size }}">
       <h2>{{ tag[0] }}</h2>
       {% for post in tag[1] %}
         <a class="archive-item" href="{{ post.url | prepend: site.baseurl }}">

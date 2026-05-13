@@ -5,19 +5,33 @@ layout: default
 <article class="shell post-layout" itemscope itemtype="https://schema.org/BlogPosting">
   <meta itemprop="author" content="{{ site.title | escape }}">
   <meta itemprop="mainEntityOfPage" content="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
+  {% assign reading_minutes = content | number_of_words | divided_by: 180 | plus: 1 %}
   <header class="post-hero">
     <a class="back-link" href="{{ '/archive' | prepend: site.baseurl }}">返回文章列表</a>
     <h1 itemprop="headline">{{ page.title }}</h1>
     <div class="post-meta">
-      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%Y-%m-%d" }}</time>
+      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">发布于 {{ page.date | date: "%Y-%m-%d" }}</time>
+      <span>{{ reading_minutes }} 分钟阅读</span>
       {% if site.enableBusuanzi %}
         <span id="busuanzi_container_page_pv">
-          阅读 <span id="busuanzi_value_page_pv"></span> 次
+          阅读 <span id="busuanzi_value_page_pv" data-busuanzi-value></span> 次
         </span>
       {% endif %}
       {% assign post_tags = page.tags | default: page.tag %}
       {% if post_tags %}
-        <span>{{ post_tags }}</span>
+        <span class="post-meta__tags">
+          {% if page.tags %}
+            {% for tag in page.tags %}
+              {% assign tag_name = tag | strip %}
+              {% assign tag_slug = tag_name | slugify %}
+              <a class="tag-pill tag-pill--meta" href="{{ '/tags#' | append: tag_slug | prepend: site.baseurl }}" aria-label="查看标签：{{ tag_name }}">{{ tag_name }}</a>
+            {% endfor %}
+          {% elsif page.tag %}
+            {% assign tag_name = page.tag | strip %}
+            {% assign tag_slug = tag_name | slugify %}
+            <a class="tag-pill tag-pill--meta" href="{{ '/tags#' | append: tag_slug | prepend: site.baseurl }}" aria-label="查看标签：{{ tag_name }}">{{ tag_name }}</a>
+          {% endif %}
+        </span>
       {% endif %}
     </div>
   </header>
@@ -32,6 +46,26 @@ layout: default
 
     <section class="prose post-content" itemprop="articleBody">
       {{ content }}
+
+      {% assign bottom_tags = page.tags | default: page.tag %}
+      {% if bottom_tags %}
+        <footer class="post-bottom-tags" aria-label="继续浏览同主题">
+          <strong>继续浏览同主题</strong>
+          <div class="tag-list">
+            {% if page.tags %}
+              {% for tag in page.tags %}
+                {% assign tag_name = tag | strip %}
+                {% assign tag_slug = tag_name | slugify %}
+                <a class="tag-pill" href="{{ '/tags#' | append: tag_slug | prepend: site.baseurl }}">{{ tag_name }}</a>
+              {% endfor %}
+            {% elsif page.tag %}
+              {% assign tag_name = page.tag | strip %}
+              {% assign tag_slug = tag_name | slugify %}
+              <a class="tag-pill" href="{{ '/tags#' | append: tag_slug | prepend: site.baseurl }}">{{ tag_name }}</a>
+            {% endif %}
+          </div>
+        </footer>
+      {% endif %}
     </section>
   </div>
 </article>

@@ -1,0 +1,43 @@
+---
+layout: page
+title: 搜索
+permalink: /search/
+noindex: true
+---
+
+<p class="page-summary">按标题、摘要和标签检索站内文章。</p>
+
+<section class="search-guide" aria-label="搜索建议">
+  <div>
+    <h2>热门标签</h2>
+    <div class="tag-cloud tag-cloud--compact">
+      {% for tag in site.tags %}
+        {% assign tag_query = tag[0] | url_encode %}
+        <a href="{{ '/search/?q=' | append: tag_query | prepend: site.baseurl }}">{{ tag[0] }} <span>{{ tag[1].size }}</span></a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div>
+    <h2>最近文章</h2>
+    <div class="search-guide__posts">
+      {% for post in site.posts limit: 4 %}
+        <a href="{{ post.url | prepend: site.baseurl }}">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+          <span>{{ post.title }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="post-search post-search--page" role="search" data-search-index="{{ '/search.json' | prepend: site.baseurl }}" data-tags-url="{{ '/tags' | prepend: site.baseurl }}" data-search-mode="page">
+  <label class="post-search__label" for="post-search-input">搜索文章</label>
+  <div class="post-search__control">
+    <input id="post-search-input" class="post-search__input" type="search" placeholder="输入标题、标签或关键词" autocomplete="off" aria-describedby="post-search-status">
+    <button class="post-search__clear" type="button" hidden>清除</button>
+  </div>
+  <p id="post-search-status" class="post-search__status" aria-live="polite">可按标题、摘要和标签搜索。</p>
+</div>
+
+<ol class="post-list search-result-list" aria-label="搜索结果"></ol>

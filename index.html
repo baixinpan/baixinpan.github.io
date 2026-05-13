@@ -2,26 +2,82 @@
 layout: default
 ---
 
+<section class="featured-posts" aria-label="精选文章">
+  <div class="section-heading">
+    <p class="eyebrow">Featured</p>
+    <h2>精选文章</h2>
+  </div>
+
+  <div class="featured-list">
+    {% assign featured_count = 0 %}
+    {% for post in site.posts %}
+      {% if post.featured and featured_count < 3 %}
+        {% assign featured_count = featured_count | plus: 1 %}
+        <a class="featured-card" href="{{ post.url | prepend: site.baseurl }}">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+          <strong>{{ post.title }}</strong>
+          <span>{{ post.description | default: post.excerpt | default: post.content | strip_html | strip_newlines | truncate: 92 }}</span>
+        </a>
+      {% endif %}
+    {% endfor %}
+
+    {% if featured_count == 0 %}
+      {% for post in site.posts limit: 3 %}
+        <a class="featured-card" href="{{ post.url | prepend: site.baseurl }}">
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+          <strong>{{ post.title }}</strong>
+          <span>{{ post.description | default: post.excerpt | default: post.content | strip_html | strip_newlines | truncate: 92 }}</span>
+        </a>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
 <section class="main-post-list" id="blog" aria-label="文章列表">
   <div class="section-heading">
     <p class="eyebrow">Latest Posts</p>
     <h2>最新文章</h2>
   </div>
 
+  <div class="post-search" role="search" data-search-index="{{ '/search.json' | prepend: site.baseurl }}" data-tags-url="{{ '/tags' | prepend: site.baseurl }}">
+    <label class="post-search__label" for="post-search-input">搜索文章</label>
+    <div class="post-search__control">
+      <input id="post-search-input" class="post-search__input" type="search" placeholder="输入标题、标签或关键词" autocomplete="off" aria-describedby="post-search-status">
+      <button class="post-search__clear" type="button" hidden>清除</button>
+    </div>
+    <p id="post-search-status" class="post-search__status" aria-live="polite">可按标题、摘要和标签搜索。</p>
+  </div>
+
   <ol class="post-list">
     {% for post in paginator.posts %}
       <li>
-        <article class="post-card">
+        {% assign card_tags = post.tags | default: post.tag %}
+        {% assign reading_minutes = post.content | number_of_words | divided_by: 180 | plus: 1 %}
+        <article class="post-card" data-post-card>
           <a class="post-card__main" href="{{ post.url | prepend: site.baseurl }}" title="访问 {{ post.title }}">
-            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%Y-%m-%d" }}</time>
+            <div class="post-card__meta">
+              <time datetime="{{ post.date | date_to_xmlschema }}">发布于 {{ post.date | date: "%Y-%m-%d" }}</time>
+              <span>{{ reading_minutes }} 分钟阅读</span>
+            </div>
             <h2>{{ post.title }}</h2>
             <p>{{ post.description | default: post.excerpt | default: post.content | strip_html | strip_newlines | truncate: 128 }}</p>
           </a>
 
           <footer class="post-card__footer">
-            {% assign card_tags = post.tags | default: post.tag %}
             {% if card_tags %}
-              <a class="tag-pill" href="{{ '/tags' | prepend: site.baseurl }}" aria-label="查看标签：{{ card_tags }}">{{ card_tags }}</a>
+              <div class="tag-list" aria-label="文章标签">
+                {% if post.tags %}
+                  {% for tag in post.tags %}
+                    {% assign tag_name = tag | strip %}
+                    {% assign tag_slug = tag_name | slugify %}
+                    <a class="tag-pill" href="{{ '/tags#' | append: tag_slug | prepend: site.baseurl }}" aria-label="查看标签：{{ tag_name }}">{{ tag_name }}</a>
+                  {% endfor %}
+                {% elsif post.tag %}
+                  {% assign tag_name = post.tag | strip %}
+                  {% assign tag_slug = tag_name | slugify %}
+                  <a class="tag-pill" href="{{ '/tags#' | append: tag_slug | prepend: site.baseurl }}" aria-label="查看标签：{{ tag_name }}">{{ tag_name }}</a>
+                {% endif %}
+              </div>
             {% endif %}
             <a class="read-more" href="{{ post.url | prepend: site.baseurl }}" aria-label="阅读全文：{{ post.title }}">阅读全文</a>
           </footer>

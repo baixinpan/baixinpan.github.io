@@ -3,14 +3,27 @@
 {% if comment_provider == 'twikoo' and twikoo_env_id or comment_provider == 'livere' and site.comment.livere or comment_provider == 'disqus' and site.comment.disqus %}
   <section class="shell post-comments">
     {% if comment_provider == 'twikoo' and twikoo_env_id %}
+      <p class="comment-status" data-comment-status>评论加载中...</p>
       <div id="twikoo"></div>
       <script src="https://cdn.jsdelivr.net/npm/twikoo@1.6.44/dist/twikoo.all.min.js"></script>
       <script>
-        twikoo.init({
-          envId: '{{ twikoo_env_id }}',
-          el: '#twikoo',
-          path: '{{ page.url }}',
-          lang: 'zh-CN'
+        window.addEventListener('DOMContentLoaded', function () {
+          var status = document.querySelector('[data-comment-status]');
+          if (!window.twikoo) {
+            if (status) status.textContent = '评论暂时不可用，可通过页脚邮箱联系我。';
+            return;
+          }
+
+          window.twikoo.init({
+            envId: '{{ twikoo_env_id }}',
+            el: '#twikoo',
+            path: '{{ page.url }}',
+            lang: 'zh-CN'
+          }).then(function () {
+            if (status) status.hidden = true;
+          }).catch(function () {
+            if (status) status.textContent = '评论暂时不可用，可通过页脚邮箱联系我。';
+          });
         });
       </script>
       <noscript>为正常使用 Twikoo 评论功能请启用 JavaScript。</noscript>
