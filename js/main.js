@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var searchMode = searchBox.getAttribute('data-search-mode') || 'inline';
     var originalList = list ? list.innerHTML : '';
     var posts = [];
+    var searchTimer = null;
 
     if (!input || !clearButton || !status || !list || !searchUrl) return;
 
@@ -124,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ].join('');
       }).join('');
 
-      status.textContent = '找到 ' + items.length + ' 篇与“' + query + '”相关的文章。';
+      status.innerHTML = '找到 ' + items.length + ' 篇与“' + escapeHtml(query) + '”相关的文章。<span class="post-search__shortcut">按回车打开第一篇</span>';
     }
 
     function rankPost(post, query) {
@@ -167,6 +168,11 @@ document.addEventListener('DOMContentLoaded', function () {
       renderPosts(results, query);
     }
 
+    function scheduleSearch() {
+      window.clearTimeout(searchTimer);
+      searchTimer = window.setTimeout(runSearch, 140);
+    }
+
     input.addEventListener('keydown', function (event) {
       if (event.key !== 'Enter') return;
       var firstResult = list.querySelector('[data-post-card] .post-card__main');
@@ -194,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
         input.disabled = true;
       });
 
-    input.addEventListener('input', runSearch);
+    input.addEventListener('input', scheduleSearch);
     clearButton.addEventListener('click', function () {
       input.value = '';
       input.focus();
@@ -278,6 +284,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 3500);
   }
 
+  function setupContentImages() {
+    var images = document.querySelectorAll('.prose img');
+
+    images.forEach(function (image) {
+      if (!image.hasAttribute('loading')) {
+        image.setAttribute('loading', 'lazy');
+      }
+      if (!image.hasAttribute('decoding')) {
+        image.setAttribute('decoding', 'async');
+      }
+    });
+  }
+
   function setupCodeCopy() {
     var blocks = document.querySelectorAll('.prose pre');
 
@@ -288,6 +307,7 @@ document.addEventListener('DOMContentLoaded', function () {
       button.className = 'copy-code-button';
       button.type = 'button';
       button.textContent = '复制';
+      button.setAttribute('aria-label', '复制代码');
 
       button.addEventListener('click', function () {
         var code = block.querySelector('code');
@@ -295,16 +315,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!navigator.clipboard || !navigator.clipboard.writeText) {
           button.textContent = '不可用';
+          button.setAttribute('aria-label', '当前浏览器不支持复制代码');
           return;
         }
 
         navigator.clipboard.writeText(value).then(function () {
           button.textContent = '已复制';
+          button.setAttribute('aria-label', '代码已复制');
           window.setTimeout(function () {
             button.textContent = '复制';
+            button.setAttribute('aria-label', '复制代码');
           }, 1600);
         }).catch(function () {
           button.textContent = '失败';
+          button.setAttribute('aria-label', '复制代码失败');
         });
       });
 
@@ -321,7 +345,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     button.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({
+        top: 0,
+        behavior: reduceMotion ? 'auto' : 'smooth'
+      });
     });
 
     updateVisibility();
@@ -370,6 +398,7 @@ document.addEventListener('DOMContentLoaded', function () {
   setupPostSearch();
   setupTagFilter();
   setupExternalFallbacks();
+  setupContentImages();
   setupCodeCopy();
   setupBackToTop();
   setupTocSpy();

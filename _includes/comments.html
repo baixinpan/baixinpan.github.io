@@ -1,7 +1,12 @@
 {% assign comment_provider = site.comment.provider %}
 {% assign twikoo_env_id = site.comment.twikoo.envId %}
 {% if comment_provider == 'twikoo' and twikoo_env_id or comment_provider == 'livere' and site.comment.livere or comment_provider == 'disqus' and site.comment.disqus %}
-  <section class="shell post-comments">
+  <section class="shell post-comments" aria-labelledby="comments-title">
+    <div class="post-comments__panel">
+      <div class="post-comments__header">
+        <h2 id="comments-title">评论交流</h2>
+        <p>欢迎补充经验、反馈问题，或留下你遇到的细节。</p>
+      </div>
     {% if comment_provider == 'twikoo' and twikoo_env_id %}
       <p class="comment-status" data-comment-status>评论加载中...</p>
       <div id="twikoo"></div>
@@ -10,7 +15,7 @@
         window.addEventListener('DOMContentLoaded', function () {
           var status = document.querySelector('[data-comment-status]');
           if (!window.twikoo) {
-            if (status) status.textContent = '评论暂时不可用，可通过页脚邮箱联系我。';
+            if (status) status.innerHTML = '评论暂时不可用，可通过 <a href="mailto:{{ site.social.mail }}">邮箱</a> 联系我。';
             return;
           }
 
@@ -22,7 +27,7 @@
           }).then(function () {
             if (status) status.hidden = true;
           }).catch(function () {
-            if (status) status.textContent = '评论暂时不可用，可通过页脚邮箱联系我。';
+            if (status) status.innerHTML = '评论暂时不可用，可通过 <a href="mailto:{{ site.social.mail }}">邮箱</a> 联系我。';
           });
         });
       </script>
@@ -60,5 +65,6 @@
       </script>
       <noscript>要查看 Disqus 评论，请启用 JavaScript。</noscript>
     {% endif %}
+    </div>
   </section>
 {% endif %}
